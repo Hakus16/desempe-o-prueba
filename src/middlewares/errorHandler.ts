@@ -11,5 +11,9 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   ) {
     return res.status(400).json({ error: err.message });
   }
+
+  if (err.message === 'Workspace name already exists') {
+    return res.status(409).json({ error: err.message });
+  }
   res.status(500).json({ error: 'Internal Server Error' });
 };

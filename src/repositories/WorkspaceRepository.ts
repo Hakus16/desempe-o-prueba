@@ -9,6 +9,10 @@ class WorkspaceRepository {
     return await Workspace.findByPk(id);
   }
 
+  async findByName(name: string): Promise<Workspace | null> {
+    return await Workspace.findOne({ where: { name } });
+  }
+
   async create(workspaceData: Partial<Workspace>): Promise<Workspace> {
     return await Workspace.create(workspaceData as any);
   }

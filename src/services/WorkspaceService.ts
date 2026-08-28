@@ -14,6 +14,10 @@ class WorkspaceService {
   }
 
   async createWorkspace(name: string, location: string, capacity: number, isAvailable: boolean = true) {
+    const existing = await WorkspaceRepository.findByName(name);
+    if (existing) {
+      throw new Error('Workspace name already exists');
+    }
     return await WorkspaceRepository.create({ name, location, capacity, isAvailable });
   }
 

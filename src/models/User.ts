@@ -3,8 +3,10 @@ import sequelize from '../config/database';
 
 interface UserAttributes {
   id: number;
+  name: string;
   email: string;
   password?: string;
+  role: 'ADMIN' | 'USER';
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -13,8 +15,10 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
+  public name!: string;
   public email!: string;
   public password!: string;
+  public role!: 'ADMIN' | 'USER';
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -27,6 +31,10 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -35,6 +43,11 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM('ADMIN', 'USER'),
+      allowNull: false,
+      defaultValue: 'USER',
     },
   },
   {

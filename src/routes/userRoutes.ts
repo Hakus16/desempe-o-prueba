@@ -16,13 +16,20 @@ const router = Router();
  *           schema:
  *             type: object
  *             required:
+ *               - name
  *               - email
  *               - password
  *             properties:
+ *               name:
+ *                 type: string
  *               email:
  *                 type: string
  *               password:
  *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [ADMIN, USER]
+ *                 default: USER
  *     responses:
  *       201:
  *         description: User registered successfully

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes';
 import workspaceRoutes from './routes/workspaceRoutes';
+import reservationRoutes from './routes/reservationRoutes';
 import { errorHandler } from './middlewares/errorHandler';
 import { setupSwagger } from './utils/swagger';
 
@@ -20,6 +21,7 @@ setupSwagger(app);
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/workspaces', workspaceRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);

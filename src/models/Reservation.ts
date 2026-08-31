@@ -55,14 +55,21 @@ Reservation.init(
   {
     sequelize,
     tableName: 'reservations',
+    indexes: [
+      {
+        unique: true,
+        fields: ['workspaceId', 'reservationDate'],
+        name: 'unique_workspace_reservation_date',
+      },
+    ],
   }
 );
 
 // Define associations
-User.hasMany(Reservation, { foreignKey: 'userId' });
-Reservation.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Reservation, { foreignKey: 'userId', as: 'reservations', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Reservation.belongsTo(User, { foreignKey: 'userId', as: 'user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-Workspace.hasMany(Reservation, { foreignKey: 'workspaceId' });
-Reservation.belongsTo(Workspace, { foreignKey: 'workspaceId' });
+Workspace.hasMany(Reservation, { foreignKey: 'workspaceId', as: 'reservations', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Reservation.belongsTo(Workspace, { foreignKey: 'workspaceId', as: 'workspace', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 export default Reservation;

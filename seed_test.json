@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "username": "admin1",
+      "password": "password123",
+      "role": "ADMIN"
+    },
+    {
+      "username": "manager1",
+      "password": "password123",
+      "role": "REQUEST_MANAGER"
+    }
+  ],
+  "clinics": [
+    {
+      "name": "Clinica Central",
+      "manager_id": 2
+    }
+  ],
+  "warehouses": [
+    {
+      "name": "Almacen Norte",
+      "location": "Ciudad"
+    }
+  ],
+  "medications": [
+    {
+      "name": "Paracetamol",
+      "description": "Pain reliever"
+    }
+  ],
+  "inventories": [
+    {
+      "warehouse_id": 1,
+      "medication_id": 1,
+      "stock": 100
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createClinic, getClinics, getClinicRequests, updateClinic, deleteClinic } from '../controllers/clinicController';
 import { authenticateJWT, requireRole } from '../middlewares/authMiddleware';
+import { validateClinicNit } from '../middlewares/validationMiddleware';
 
 const router = Router();
 
@@ -31,7 +32,7 @@ router.use(authenticateJWT);
  *       201:
  *         description: Clinic created
  */
-router.post('/', requireRole(['ADMIN']), createClinic);
+router.post('/', requireRole(['ADMIN']), validateClinicNit, createClinic);
 
 /**
  * @swagger
@@ -98,7 +99,7 @@ router.get('/:id/requests', getClinicRequests);
  *       200:
  *         description: Clinic updated
  */
-router.put('/:id', requireRole(['ADMIN']), updateClinic);
+router.put('/:id', requireRole(['ADMIN']), validateClinicNit, updateClinic);
 
 /**
  * @swagger

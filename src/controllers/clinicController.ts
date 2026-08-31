@@ -8,11 +8,6 @@ export const createClinic = async (req: Request, res: Response): Promise<any> =>
     if (!name || !nit || !manager_id) {
       return res.status(400).json({ message: 'Missing required fields (name, nit, manager_id)' });
     }
-
-    const existingClinic = await Clinic.findOne({ where: { nit } });
-    if (existingClinic) {
-      return res.status(400).json({ message: 'A clinic with this NIT already exists' });
-    }
     
     const manager = await User.findByPk(manager_id);
     if (!manager) {
@@ -55,13 +50,6 @@ export const updateClinic = async (req: Request, res: Response): Promise<any> =>
     
     const clinic = await Clinic.findByPk(id as string);
     if (!clinic) return res.status(404).json({ message: 'Clinic not found' });
-    
-    if (nit && nit !== clinic.nit) {
-      const existingClinic = await Clinic.findOne({ where: { nit } });
-      if (existingClinic) {
-        return res.status(400).json({ message: 'A clinic with this NIT already exists' });
-      }
-    }
 
     if (manager_id) {
       const manager = await User.findByPk(manager_id);

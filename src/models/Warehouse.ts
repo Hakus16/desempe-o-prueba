@@ -34,6 +34,7 @@ Warehouse.init(
   {
     sequelize,
     tableName: 'warehouses',
+    paranoid: true,
   }
 );
 

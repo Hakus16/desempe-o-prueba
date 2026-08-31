@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createClinic, getClinics, getClinicRequests } from '../controllers/clinicController';
+import { createClinic, getClinics, getClinicRequests, updateClinic, deleteClinic } from '../controllers/clinicController';
 import { authenticateJWT, requireRole } from '../middlewares/authMiddleware';
 
 const router = Router();
@@ -66,5 +66,58 @@ router.get('/', getClinics);
  *         description: List of requests
  */
 router.get('/:id/requests', getClinicRequests);
+
+/**
+ * @swagger
+ * /api/clinics/{id}:
+ *   put:
+ *     summary: Update a clinic
+ *     tags: [Clinics]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               nit:
+ *                 type: string
+ *               manager_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Clinic updated
+ */
+router.put('/:id', requireRole(['ADMIN']), updateClinic);
+
+/**
+ * @swagger
+ * /api/clinics/{id}:
+ *   delete:
+ *     summary: Delete a clinic (soft delete)
+ *     tags: [Clinics]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Clinic logically deleted
+ */
+router.delete('/:id', requireRole(['ADMIN']), deleteClinic);
 
 export default router;

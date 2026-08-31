@@ -31,6 +31,7 @@ SupplyRequestItem.init(
   {
     sequelize,
     tableName: 'supply_request_items',
+    paranoid: true,
   }
 );
 

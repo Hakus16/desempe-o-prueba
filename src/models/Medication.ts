@@ -34,6 +34,7 @@ Medication.init(
   {
     sequelize,
     tableName: 'medications',
+    paranoid: true,
   }
 );
 

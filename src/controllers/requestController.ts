@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { SupplyRequest, SupplyRequestItem, Clinic, Warehouse, Medication, Inventory, sequelize } from '../models';
+import { Op } from 'sequelize';
 
 export const createRequest = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -131,6 +132,64 @@ export const updateStatus = async (req: Request, res: Response): Promise<any> =>
     await request.save();
     
     res.json(request);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const getActiveRequests = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const requests = await SupplyRequest.findAll({
+      where: {
+        status: {
+          [Op.in]: ['PENDING', 'ASSIGNED', 'SHIPPED']
+        }
+      },
+      include: [
+        { model: Clinic, as: 'clinic' },
+        { model: Warehouse, as: 'warehouse' },
+        { model: Medication, as: 'items', through: { attributes: ['quantity'] } }
+      ]
+    });
+    res.json(requests);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const updateRequest = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const { clinic_id } = req.body;
+    
+    const request = await SupplyRequest.findByPk(id as string);
+    if (!request) return res.status(404).json({ message: 'Request not found' });
+    
+    if (request.status !== 'PENDING') {
+      return res.status(400).json({ message: 'Only PENDING requests can be updated' });
+    }
+    
+    if (clinic_id) {
+      const clinic = await Clinic.findByPk(clinic_id);
+      if (!clinic) return res.status(404).json({ message: 'Clinic not found' });
+      request.clinic_id = clinic_id;
+    }
+    
+    await request.save();
+    res.json(request);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const deleteRequest = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const request = await SupplyRequest.findByPk(id as string);
+    if (!request) return res.status(404).json({ message: 'Request not found' });
+    
+    await request.destroy();
+    res.json({ message: 'Request deleted logically' });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

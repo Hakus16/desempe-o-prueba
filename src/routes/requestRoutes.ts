@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createRequest, getRequests, assignWarehouse, updateStatus, getActiveRequests, updateRequest, deleteRequest } from '../controllers/requestController';
 import { authenticateJWT, requireRole } from '../middlewares/authMiddleware';
+import { validateRequestCreation, validateStatusTransition } from '../middlewares/validationMiddleware';
 
 const router = Router();
 
@@ -23,6 +24,10 @@ router.use(authenticateJWT);
  *             properties:
  *               clinic_id:
  *                 type: integer
+ *               warehouse_id:
+ *                 type: integer
+ *               status:
+ *                 type: string
  *               items:
  *                 type: array
  *                 items:
@@ -36,7 +41,7 @@ router.use(authenticateJWT);
  *       201:
  *         description: Request created
  */
-router.post('/', requireRole(['ADMIN', 'REQUEST_MANAGER']), createRequest);
+router.post('/', requireRole(['ADMIN', 'REQUEST_MANAGER']), validateRequestCreation, createRequest);
 
 /**
  * @swagger
@@ -109,7 +114,7 @@ router.put('/:id/assign', requireRole(['ADMIN']), assignWarehouse);
  *       200:
  *         description: Status updated
  */
-router.put('/:id/status', requireRole(['ADMIN', 'REQUEST_MANAGER']), updateStatus);
+router.put('/:id/status', requireRole(['ADMIN', 'REQUEST_MANAGER']), validateStatusTransition, updateStatus);
 
 /**
  * @swagger

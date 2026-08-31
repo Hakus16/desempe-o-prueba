@@ -34,6 +34,7 @@ Workspace.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     location: {
       type: DataTypes.STRING,
@@ -42,6 +43,9 @@ Workspace.init(
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+      },
     },
     isAvailable: {
       type: DataTypes.BOOLEAN,

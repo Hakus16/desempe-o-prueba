@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 import { Clinic, SupplyRequest, User } from '../models';
 
+/**
+ * Controller function to handle createClinic operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const createClinic = async (req: Request, res: Response): Promise<any> => {
   try {
     const { name, nit, manager_id } = req.body;
@@ -21,6 +27,12 @@ export const createClinic = async (req: Request, res: Response): Promise<any> =>
   }
 };
 
+/**
+ * Controller function to handle getClinics operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getClinics = async (req: Request, res: Response): Promise<any> => {
   try {
     const clinics = await Clinic.findAll({ include: [{ model: User, as: 'manager', attributes: ['id', 'username'] }] });
@@ -30,6 +42,12 @@ export const getClinics = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
+/**
+ * Controller function to handle getClinicRequests operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getClinicRequests = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -43,6 +61,12 @@ export const getClinicRequests = async (req: Request, res: Response): Promise<an
   }
 };
 
+/**
+ * Controller function to handle updateClinic operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateClinic = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -65,6 +89,12 @@ export const updateClinic = async (req: Request, res: Response): Promise<any> =>
   }
 };
 
+/**
+ * Controller function to handle deleteClinic operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const deleteClinic = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;

@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 import { Medication } from '../models';
 
+/**
+ * Controller function to handle createMedication operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const createMedication = async (req: Request, res: Response): Promise<any> => {
   try {
     const { name, description } = req.body;
@@ -11,6 +17,12 @@ export const createMedication = async (req: Request, res: Response): Promise<any
   }
 };
 
+/**
+ * Controller function to handle getMedications operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getMedications = async (req: Request, res: Response): Promise<any> => {
   try {
     const medications = await Medication.findAll();
@@ -20,6 +32,12 @@ export const getMedications = async (req: Request, res: Response): Promise<any> 
   }
 };
 
+/**
+ * Controller function to handle updateMedication operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateMedication = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -35,6 +53,12 @@ export const updateMedication = async (req: Request, res: Response): Promise<any
   }
 };
 
+/**
+ * Controller function to handle deleteMedication operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const deleteMedication = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;

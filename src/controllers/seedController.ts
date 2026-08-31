@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import { User, Clinic, Warehouse, Medication, Inventory, sequelize } from '../models';
 import bcrypt from 'bcrypt';
 
+/**
+ * Controller function to handle seedDatabase operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const seedDatabase = async (req: Request, res: Response): Promise<any> => {
   try {
     if (!req.file) {

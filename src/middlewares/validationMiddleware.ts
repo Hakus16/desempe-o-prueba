@@ -1,6 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import { Clinic, Inventory, SupplyRequest } from '../models';
 
+/**
+ * Controller function to handle validateClinicNit operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
+/**
+ * Middleware function to handle validateClinicNit validation.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<any>} A promise that resolves to next() or an error response.
+ */
 export const validateClinicNit = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
     const { nit } = req.body;
@@ -22,6 +35,19 @@ export const validateClinicNit = async (req: Request, res: Response, next: NextF
   }
 };
 
+/**
+ * Controller function to handle validateRequestCreation operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
+/**
+ * Middleware function to handle validateRequestCreation validation.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<any>} A promise that resolves to next() or an error response.
+ */
 export const validateRequestCreation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
     const { items, warehouse_id } = req.body;
@@ -56,6 +82,19 @@ export const validateRequestCreation = async (req: Request, res: Response, next:
   }
 };
 
+/**
+ * Controller function to handle validateStatusTransition operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
+/**
+ * Middleware function to handle validateStatusTransition validation.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<any>} A promise that resolves to next() or an error response.
+ */
 export const validateStatusTransition = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
     const { id } = req.params;

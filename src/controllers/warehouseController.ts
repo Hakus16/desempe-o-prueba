@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 import { Warehouse, Inventory, Medication } from '../models';
 
+/**
+ * Controller function to handle createWarehouse operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const createWarehouse = async (req: Request, res: Response): Promise<any> => {
   try {
     const { name, location } = req.body;
@@ -11,6 +17,12 @@ export const createWarehouse = async (req: Request, res: Response): Promise<any>
   }
 };
 
+/**
+ * Controller function to handle getWarehouses operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getWarehouses = async (req: Request, res: Response): Promise<any> => {
   try {
     const warehouses = await Warehouse.findAll();
@@ -20,6 +32,12 @@ export const getWarehouses = async (req: Request, res: Response): Promise<any> =
   }
 };
 
+/**
+ * Controller function to handle updateInventory operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateInventory = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params; // warehouse_id
@@ -47,6 +65,12 @@ export const updateInventory = async (req: Request, res: Response): Promise<any>
   }
 };
 
+/**
+ * Controller function to handle getInventory operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getInventory = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -60,6 +84,12 @@ export const getInventory = async (req: Request, res: Response): Promise<any> =>
   }
 };
 
+/**
+ * Controller function to handle updateWarehouse operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateWarehouse = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -75,6 +105,12 @@ export const updateWarehouse = async (req: Request, res: Response): Promise<any>
   }
 };
 
+/**
+ * Controller function to handle deleteWarehouse operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const deleteWarehouse = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;

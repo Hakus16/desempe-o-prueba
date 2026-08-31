@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import { SupplyRequest, SupplyRequestItem, Clinic, Warehouse, Medication, Inventory, sequelize } from '../models';
 import { Op } from 'sequelize';
 
+/**
+ * Controller function to handle createRequest operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const createRequest = async (req: Request, res: Response): Promise<any> => {
   const transaction = await sequelize.transaction();
   try {
@@ -49,6 +55,12 @@ export const createRequest = async (req: Request, res: Response): Promise<any> =
   }
 };
 
+/**
+ * Controller function to handle getRequests operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getRequests = async (req: Request, res: Response): Promise<any> => {
   try {
     const requests = await SupplyRequest.findAll({
@@ -64,6 +76,12 @@ export const getRequests = async (req: Request, res: Response): Promise<any> => 
   }
 };
 
+/**
+ * Controller function to handle assignWarehouse operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const assignWarehouse = async (req: Request, res: Response): Promise<any> => {
   const transaction = await sequelize.transaction();
   try {
@@ -120,6 +138,12 @@ export const assignWarehouse = async (req: Request, res: Response): Promise<any>
   }
 };
 
+/**
+ * Controller function to handle updateStatus operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateStatus = async (req: Request, res: Response): Promise<any> => {
   try {
     const { status } = req.body;
@@ -136,6 +160,12 @@ export const updateStatus = async (req: Request, res: Response): Promise<any> =>
   }
 };
 
+/**
+ * Controller function to handle getActiveRequests operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const getActiveRequests = async (req: Request, res: Response): Promise<any> => {
   try {
     const requests = await SupplyRequest.findAll({
@@ -156,6 +186,12 @@ export const getActiveRequests = async (req: Request, res: Response): Promise<an
   }
 };
 
+/**
+ * Controller function to handle updateRequest operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const updateRequest = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
@@ -181,6 +217,12 @@ export const updateRequest = async (req: Request, res: Response): Promise<any> =
   }
 };
 
+/**
+ * Controller function to handle deleteRequest operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const deleteRequest = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;

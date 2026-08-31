@@ -5,6 +5,12 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 
+/**
+ * Controller function to handle register operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const register = async (req: Request, res: Response): Promise<any> => {
   try {
     const { username, password, role } = req.body;
@@ -27,6 +33,12 @@ export const register = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
+/**
+ * Controller function to handle login operations.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<any>} A promise that resolves to the response.
+ */
 export const login = async (req: Request, res: Response): Promise<any> => {
   try {
     const { username, password } = req.body;

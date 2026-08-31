@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { createRequest, getRequests, assignWarehouse, updateStatus } from '../controllers/requestController';
+import { createRequest, getRequests, assignWarehouse, updateStatus, getActiveRequests, updateRequest, deleteRequest } from '../controllers/requestController';
 import { authenticateJWT, requireRole } from '../middlewares/authMiddleware';
+import { validateRequestCreation, validateStatusTransition } from '../middlewares/validationMiddleware';
 
 const router = Router();
 
@@ -23,6 +24,10 @@ router.use(authenticateJWT);
  *             properties:
  *               clinic_id:
  *                 type: integer
+ *               warehouse_id:
+ *                 type: integer
+ *               status:
+ *                 type: string
  *               items:
  *                 type: array
  *                 items:
@@ -36,7 +41,7 @@ router.use(authenticateJWT);
  *       201:
  *         description: Request created
  */
-router.post('/', requireRole(['ADMIN', 'REQUEST_MANAGER']), createRequest);
+router.post('/', requireRole(['ADMIN', 'REQUEST_MANAGER']), validateRequestCreation, createRequest);
 
 /**
  * @swagger
@@ -109,6 +114,69 @@ router.put('/:id/assign', requireRole(['ADMIN']), assignWarehouse);
  *       200:
  *         description: Status updated
  */
-router.put('/:id/status', requireRole(['ADMIN', 'REQUEST_MANAGER']), updateStatus);
+router.put('/:id/status', requireRole(['ADMIN', 'REQUEST_MANAGER']), validateStatusTransition, updateStatus);
+
+/**
+ * @swagger
+ * /api/requests/active:
+ *   get:
+ *     summary: Get active supply requests
+ *     tags: [Requests]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of active requests
+ */
+router.get('/active', getActiveRequests);
+
+/**
+ * @swagger
+ * /api/requests/{id}:
+ *   put:
+ *     summary: Update a request (only if PENDING)
+ *     tags: [Requests]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               clinic_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Request updated
+ */
+router.put('/:id', requireRole(['ADMIN']), updateRequest);
+
+/**
+ * @swagger
+ * /api/requests/{id}:
+ *   delete:
+ *     summary: Delete a request (soft delete)
+ *     tags: [Requests]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Request logically deleted
+ */
+router.delete('/:id', requireRole(['ADMIN']), deleteRequest);
 
 export default router;

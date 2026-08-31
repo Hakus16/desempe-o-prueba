@@ -32,6 +32,7 @@ Inventory.init(
   {
     sequelize,
     tableName: 'inventories',
+    paranoid: true,
   }
 );
 

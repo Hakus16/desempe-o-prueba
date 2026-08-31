@@ -47,3 +47,45 @@ export const getClinicRequests = async (req: Request, res: Response): Promise<an
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+export const updateClinic = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const { name, nit, manager_id } = req.body;
+    
+    const clinic = await Clinic.findByPk(id as string);
+    if (!clinic) return res.status(404).json({ message: 'Clinic not found' });
+    
+    if (nit && nit !== clinic.nit) {
+      const existingClinic = await Clinic.findOne({ where: { nit } });
+      if (existingClinic) {
+        return res.status(400).json({ message: 'A clinic with this NIT already exists' });
+      }
+    }
+
+    if (manager_id) {
+      const manager = await User.findByPk(manager_id);
+      if (!manager) {
+        return res.status(404).json({ message: 'Manager (User) not found' });
+      }
+    }
+    
+    await clinic.update({ name, nit, manager_id });
+    res.json(clinic);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const deleteClinic = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const clinic = await Clinic.findByPk(id as string);
+    if (!clinic) return res.status(404).json({ message: 'Clinic not found' });
+    
+    await clinic.destroy(); // Soft delete because of paranoid: true
+    res.json({ message: 'Clinic deleted logically' });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};

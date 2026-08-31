@@ -41,6 +41,7 @@ SupplyRequest.init(
   {
     sequelize,
     tableName: 'supply_requests',
+    paranoid: true,
   }
 );
 

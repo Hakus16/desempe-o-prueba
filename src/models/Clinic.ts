@@ -41,6 +41,7 @@ Clinic.init(
   {
     sequelize,
     tableName: 'clinics',
+    paranoid: true,
   }
 );
 
